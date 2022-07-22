@@ -32,7 +32,7 @@ uint binomial_coefficient(const uint& n, const uint& k) { // O(1) implementation
     uint answer = n - k + 1;
 
     for (int i = 1; i < k; i++) {
-        answer *= (n-k+1+i)/(i+1);
+        answer *= (n - k + 1 + i) / (i + 1);
     }
 
     return answer;
@@ -46,11 +46,11 @@ uint binomial_coefficient(const uint& n, const uint& k) { // O(1) implementation
  * @return int 
  */
 int binomial_coefficient(const int& n, const int& k) { // O(1) implementation for int binomial coeff.
-
+    assert(n >= 0 && k >= 0 );
     int answer = n - k + 1;
 
     for (int i = 1; i < k; i++) {
-        answer *= (n-k+1+i)/(i+1);
+        answer *= (n - k + 1 + i) / (i + 1);
     }
 
     return answer;
@@ -65,7 +65,7 @@ int binomial_coefficient(const int& n, const int& k) { // O(1) implementation fo
  * @return float
  */
 auto binomial_coefficient(const auto& n, const auto& k) { // Generalised binomial coefficient... likely slow.
-    return tgamma(n+1)/(tgamma(k+1)*tgamma(n-k+1));
+    return tgamma(n + 1)/(tgamma(k + 1) * tgamma(n - k + 1));
 }
 
 
@@ -92,6 +92,9 @@ uint factorial(const uint& x) { // O(1) implementation for unsigned factorial.
  * @return int 
  */
 int factorial(const int& x) { // O(1) implementation for int factorial.
+    
+    assert(x >= 0);
+
     int answer = 1;
 
     for (int i = 1; i < x + 1; i++) {
@@ -121,21 +124,21 @@ auto legendre_poly(const auto& x, const int& m, const int& l) { // Closed form o
     if (abs(m) > l) {
         return 0.0;
     } else if (l < 0) {
-        return legendre_poly(x, m, abs(l)-1);
+        return legendre_poly(x, m, abs(l) - 1);
     } else if (m < 0) {
 
         int pos_m = abs(m);
 
-        return pow(-1,pos_m)*float(factorial(l - pos_m))/factorial(l + pos_m)*legendre_poly(x, pos_m, l);
+        return pow(-1,pos_m) * float(factorial(l - pos_m)) / factorial(l + pos_m) * legendre_poly(x, pos_m, l);
     } else {
 
         float sum = 0;
 
         for (int k = m; k < l + 1; k++) {
-            sum += float(factorial(k))/factorial(k-m)*pow(x, k-m)*binomial_coefficient(l, k)*binomial_coefficient(float(l+k-1)/2,l);
+            sum += float(factorial(k)) / factorial(k-m) * pow(x, k-m) * binomial_coefficient(l, k) * binomial_coefficient(float(l + k - 1) / 2, l);
         }
 
-        return pow(-1, m)*pow(2, l)*pow(1-x*x, float(m)/2)*sum;
+        return pow(-1, m) * pow(2, l) * pow(1 - x * x, float(m) / 2) * sum;
     }
 }
 
@@ -151,8 +154,8 @@ auto legendre_poly(const auto& x, const int& m, const int& l) { // Closed form o
 float a_func(const auto& x, const auto& y, const int& m) {
     float sum = 0;
 
-    for (int p = 0; p < m+1; p++) {
-        sum += binomial_coefficient(m, p)*pow(x,p)*pow(y,m-p)*cos((m-p)*M_PI_2);
+    for (int p = 0; p < m + 1; p++) {
+        sum += binomial_coefficient(m, p) * pow(x,p) * pow(y,m-p) * cos((m-p) * M_PI_2);
     }
     return sum;
 }
@@ -169,8 +172,8 @@ float a_func(const auto& x, const auto& y, const int& m) {
 float b_func(const auto& x, const auto& y, const int& m) {
     float sum = 0;
 
-    for (int p = 0; p < m+1; p++) {
-        sum += binomial_coefficient(m, p)*pow(x,p)*pow(y,m-p)*sin((m-p)*M_PI_2);
+    for (int p = 0; p < m + 1; p++) {
+        sum += binomial_coefficient(m, p) * pow(x, p) * pow(y, m - p) * sin((m - p) * M_PI_2);
     }
     return sum;
 }
@@ -188,8 +191,8 @@ float b_func(const auto& x, const auto& y, const int& m) {
 float pi_func(const auto& z, const auto& length, const int& m, const int& l) {
     float sum = 0;
 
-    for (int k = 0; k < (l-m)/2+1; k++) {
-        sum += pow(-1,k)*pow(2,-l)*binomial_coefficient(l,k)*binomial_coefficient(2*l-2*k,l)*float(factorial(l-2*k))/factorial(l-2*k-m)*pow(length,2*k)*pow(z,l-2*k-m);
+    for (int k = 0; k < (l - m) / 2 + 1; k++) {
+        sum += pow(-1, k) * pow(2, -l) * binomial_coefficient(l, k) * binomial_coefficient(2 * l - 2 * k, l) * float(factorial(l - 2 * k)) / factorial(l - 2 * k - m) * pow(length, 2 * k) * pow(z, l - 2 * k - m);
     }
 
     return sqrt(float(factorial(l-m))/factorial(l+m))*sum;
@@ -211,7 +214,7 @@ bool in_2sphere(const auto& theta, const auto& phi) {
 std::complex<float> complex_spherical_harmonics(const auto& theta, const auto& phi, const int& m, const int& l) {
     assert(in_2sphere(theta, phi));
 
-    return sqrt(float((2*l+1))/(4*M_PI)*float(factorial(l-m))/factorial(l+m))*legendre_poly(cos(theta), m, l)*std::exp(1*std::complex_literals::i*m*phi);
+    return sqrt(float((2 * l + 1)) / (4 * M_PI) * float(factorial(l - m)) / factorial(l + m)) * legendre_poly(cos(theta), m, l) * std::exp(1 * std::complex_literals::i * m * phi);
 }
 
 
@@ -225,14 +228,14 @@ std::complex<float> complex_spherical_harmonics(const auto& theta, const auto& p
  * @return auto 
  */
 auto spherical_harmonics(const auto& theta, const auto& phi, const int& m, const int& l) {
-    
+    assert(in_2sphere(theta, phi));
     if (m < 0) {
         int pos_m = abs(m);
-        return pow(-1,m)*sqrt(2)*sqrt(float((2*l+1))/(4*M_PI)*float(factorial(l-pos_m))/factorial(l+pos_m))*legendre_poly(cos(theta), pos_m, l)*sin(pos_m*phi);
+        return pow(-1, m) * sqrt(2) * sqrt(float((2 * l + 1)) / (4 * M_PI) * float(factorial(l - pos_m)) / factorial(l + pos_m)) * legendre_poly(cos(theta), pos_m, l) * sin(pos_m * phi);
     } else if (m == 0) {
-        return sqrt((float(2*l+1))/(4*M_PI))*legendre_poly(cos(theta),m,l);
+        return sqrt((float(2 * l + 1)) / (4 * M_PI)) * legendre_poly(cos(theta), m, l);
     } else {
-        return pow(-1,m)*sqrt(2)*sqrt(float((2*l+1))/(4*M_PI)*float(factorial(l-m))/factorial(l+m))*legendre_poly(cos(theta), m, l)*cos(m*phi);
+        return pow(-1, m) * sqrt(2) * sqrt(float((2 * l + 1)) / (4 * M_PI) * float(factorial(l - m)) / factorial(l + m)) * legendre_poly(cos(theta), m, l) * cos(m * phi);
     }
 }
 
@@ -247,13 +250,15 @@ auto spherical_harmonics(const auto& theta, const auto& phi, const int& m, const
  */
 template <typename T>
 std::complex<float> complex_spherical_harmonics(const Eigen::Vector3<T>& direction, const int& m, const int& l) {
+    
     float dir_len = direction.norm();
+    
     if (m > 0) {
-        return pow(dir_len, -l)*sqrt(float(2*l+1)/(2*M_PI))*pi_func(direction[2], dir_len, m, l)*pow(-1,m)*(a_func(direction[0],direction[1],m)+1*std::complex_literals::i*b_func(direction[0],direction[1],m));
-    } else if {
-        return pow(dir_len, -l)*sqrt(float(2*l+1)/(2*M_PI))*pi_func(direction[2], dir_len, m, l);
+        return pow(dir_len, -l) * sqrt(float(2 * l + 1) / (2 * M_PI)) * pi_func(direction[2], dir_len, m, l) * pow(-1, m) * (a_func(direction[0], direction[1], m) + 1 * std::complex_literals::i * b_func(direction[0], direction[1], m));
+    } else if (m == 0) {
+        return pow(dir_len, -l) * sqrt(float(2 * l + 1) / (2 * M_PI)) * pi_func(direction[2], dir_len, m, l);
     } else {
-        return pow(dir_len, -l)*sqrt(float(2*l+1)/(2*M_PI))*pi_func(direction[2], dir_len, abs(m), l)*(a_func(direction[0],direction[1],abs(m))-1*std::complex_literals::i*b_func(direction[0],direction[1],abs(m)));
+        return pow(dir_len, -l) * sqrt(float(2 * l + 1) / (2 * M_PI)) * pi_func(direction[2], dir_len, abs(m), l)*(a_func(direction[0], direction[1], abs(m)) - 1 * std::complex_literals::i * b_func(direction[0], direction[1], abs(m)));
     }
 }
 
@@ -268,13 +273,15 @@ std::complex<float> complex_spherical_harmonics(const Eigen::Vector3<T>& directi
  */
 template <typename T>
 auto spherical_harmonics(const Eigen::Vector3<T>& direction, const int& m, const int& l) {
+
     float dir_len = direction.norm();
+    
     if (m > 0) {
-        return pow(dir_len,-l)*sqrt(float(2*l+1)/(2*M_PI))*pi_func(direction[2],dir_len,m,l)*a_func(direction[0],direction[1],m);
+        return pow(dir_len, -l) * sqrt(float(2 * l + 1) / (2 * M_PI)) * pi_func(direction[2], dir_len, m, l) * a_func(direction[0], direction[1], m);
     } else if (m == 0) {
-        return pow(dir_len,-l)*sqrt(float(2*l+1)/(2*M_PI))*pi_func(direction[2],dir_len,m,l);
+        return pow(dir_len, -l) * sqrt(float(2 * l + 1) / (2 * M_PI)) * pi_func(direction[2], dir_len, m, l);
     } else {
-        return pow(dir_len,-l)*sqrt(float(2*l+1)/(2*M_PI))*pi_func(direction[2],dir_len,abs(m),l)*b_func(direction[0],direction[1],abs(m));
+        return pow(dir_len, -l) * sqrt(float(2 * l + 1) / (2 * M_PI)) * pi_func(direction[2], dir_len, abs(m), l) * b_func(direction[0], direction[1], abs(m));
     }
 
 }
