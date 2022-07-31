@@ -86,12 +86,12 @@ uint factorial(const uint& x) { // Pseudo-polynomial implementation for unsigned
 }
 
 /**
- * @brief Factorial in constant time.
+ * @brief Factorial in pseudo-polynomial time.
  * 
  * @param x 
  * @return int 
  */
-int factorial(const int& x) { // O(1) implementation for int factorial.
+int factorial(const int& x) { // Pseudo-polynomial implementation for int factorial.
     
     assert(x >= 0);
 
