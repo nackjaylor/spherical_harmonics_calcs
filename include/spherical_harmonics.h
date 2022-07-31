@@ -70,12 +70,12 @@ auto binomial_coefficient(const auto& n, const auto& k) { // Generalised binomia
 
 
 /**
- * @brief Factorial in constant time.
+ * @brief Factorial in pseudo-polynomial time.
  * 
  * @param x 
  * @return uint 
  */
-uint factorial(const uint& x) { // O(1) implementation for unsigned factorial.
+uint factorial(const uint& x) { // Pseudo-polynomial implementation for unsigned factorial.
     uint answer = 1;
 
     for (int i = 1; i < x + 1; i++) {
@@ -86,12 +86,12 @@ uint factorial(const uint& x) { // O(1) implementation for unsigned factorial.
 }
 
 /**
- * @brief Factorial in constant time.
+ * @brief Factorial in pseudo-polynomial time.
  * 
  * @param x 
  * @return int 
  */
-int factorial(const int& x) { // O(1) implementation for int factorial.
+int factorial(const int& x) { // Pseudo-polynomial implementation for int factorial.
     
     assert(x >= 0);
 
